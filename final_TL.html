@@ -1,0 +1,179 @@
+<html>
+    <head>
+         <title>
+            Traffic Light
+        </title>
+    </head>
+    
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f7e5d4;
+        }
+
+        #red {
+            border: 10px;
+            border-radius: 50%;
+            height: 50px;
+            width: 50px;
+        }
+
+        .red {
+            background-color: red;
+            opacity: 1;
+        }  
+
+        .yellow {
+            background-color: yellow;
+            opacity: 1;
+        }
+
+        .green {
+            background-color: green;
+            opacity: 1;
+        }
+
+        #yellow {
+            background-color: yellow;
+            border: 10px;
+            border-radius: 50%;
+            height: 50px;
+            width: 50px;
+        }
+
+        #green {
+            background-color: green;            
+            border: 10px;
+            border-radius: 50%;
+            height: 50px;
+            width: 50px;
+        }
+
+        #box {
+            width: 100px;
+            background-color: black;
+            padding: 20px 20px 20px 20px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .class1 {
+            margin-top: 10px;
+            align-items: center;
+            padding: 10px;
+        }
+
+        #poll {
+            background-color: black;
+            width: 20px;
+            height: 150px;
+            display: flex;
+            margin: 440px 100px 0px -78px;
+            align-items: center;
+            position: relative;
+        }
+        </style>
+        
+        <body>
+            
+            <div id="box">
+                <div id="red" class="class1 red" onclick="changeLightsRed()"></div>
+                <div id="yellow" class="class1 yellow" onclick="yellowLightblink()"></div>
+                <div id="green" class="class1 green" onclick="changeLightsGreen()"></div>
+            </div>
+            
+            <div id="poll"></div>
+        
+        </body>
+        
+        <script>
+        
+        var redbulb = document.getElementById("red");
+        var yellowbulb = document.getElementById("yellow");
+        var greenbulb = document.getElementById("green");
+        var intervallster = null; // variable to store blinking interval
+        //let currentStateRed = 0; //  Initial state (start with Red)
+
+        //function to stop yellow light blinkning
+        function stopYellowBlinking(){
+            if (intervallster){ // check if blinking is active
+            clearInterval(intervallster); // stop blinking
+            intervallster = null; //Reset interval variable
+            yellowbulb.style.opacity = "0.3";
+        }
+    }
+        
+
+        // Function to change lights when red is clicked
+        function changeLightsRed() {
+            stopYellowBlinking();
+            redbulb.style.opacity = "0.3"; // Turn off red
+            yellowbulb.style.opacity = "0.3"; // Turn on green
+            greenbulb.style.opacity ="1"
+
+            setTimeout(function() {
+                greenbulb.style.opacity = "0.3"; // Turn off green
+                yellowbulb.style.opacity = "1"; // Turn on yellow
+
+                setTimeout(function() {
+                    yellowbulb.style.opacity = "0.3"; // Turn off yellow
+                    redbulb.style.opacity = "1"; // Turn on red
+                }, 2000); // Wait for 2 seconds before switching to red
+            }, 3000); // Wait for 3 seconds before switching to yellow
+        }
+
+        // Function to change lights when green is clicked
+        function changeLightsGreen() {
+            stopYellowBlinking();
+            redbulb.style.opacity = "1"; // Turn off red
+            yellowbulb.style.opacity = "0.3"; // Turn off yellow
+            greenbulb.style.opacity = "0.3"; // Turn off green
+           // clearInterval(intervallster)
+
+            setTimeout(function() {
+                redbulb.style.opacity = "1"; // Turn on red
+                setTimeout(function() {
+                    yellowbulb.style.opacity = "1"; // Turn on yellow along with red
+
+                    setTimeout(function() {
+                        redbulb.style.opacity = "0.3"; // Turn off red
+                        yellowbulb.style.opacity = "0.3"; // Turn off yellow
+                        greenbulb.style.opacity = "1"; // Turn on green
+                    }, 2000); // Wait for 1 second before turning off red and yellow
+                }, 1000); // Wait for 1 second before turning on yellow
+            }, 1000); // Wait for 1 second before turning on red
+        }
+        //function to keep yellowlight blinking
+        function yellowLightblink(){
+            if(intervallster){
+                stopYellowBlinking(); // clear any existig intervals
+            }
+            else{
+                stopYellowBlinking();
+            
+                redbulb.style.opacity = "0.3"; // Turn off red
+                greenbulb.style.opacity = "0.3"; // Turn off green
+                
+                // start blinking the yellow light
+                intervallster = setInterval(() => {
+                    yellowbulb.style.opacity = (yellowbulb.style.opacity === "1") ? "0.3" : "1";
+                }, 600);
+        }
+    }
+
+    // necessary but not important
+
+      /*  redbulb.onclick = changeLightsRed;
+        yellowbulb.onclick = yellowLightblink;
+        greenbulb.onclick = changeLightsGreen;
+
+        */
+        
+        </script>
+</html>
